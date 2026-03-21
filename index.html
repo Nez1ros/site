@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonatovGifts - Надежная OTC-платформа</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent-blue: #0084ff;
+            --deep-blue: #0056b3;
+            --bg-gradient: linear-gradient(135deg, #f5f9ff 0%, #c2e0ff 100%);
+            --glass-white: rgba(255, 255, 255, 0.85);
+            --text-main: #1d1d1f;
+            --text-secondary: #495057;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--glass-white);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: var(--shadow);
+            padding-bottom: 90px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 25px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        header img {
+            max-width: 220px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-blue), var(--deep-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .main-content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        /* Секции */
+        .page-section {
+            display: none;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .page-section.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-box {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Отзывы */
+        .review-card {
+            background: white;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: transform 0.2s;
+        }
+
+        .review-card:hover { transform: scale(1.02); }
+
+        .review-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .user-info { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+        .user-info i { color: var(--accent-blue); font-size: 14px; }
+
+        .stars { color: #ffbc00; font-size: 13px; }
+
+        .review-text { color: var(--text-secondary); margin-bottom: 10px; }
+
+        .review-meta {
+            font-size: 11px;
+            color: #adb5bd;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Навигация */
+        .navbar {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 550px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #8e8e93;
+            font-size: 11px;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            gap: 4px;
+        }
+
+        .nav-item i { font-size: 20px; }
+
+        .nav-item.active { color: var(--accent-blue); }
+        .nav-item:hover { color: var(--accent-blue); }
+
+        /* О нас статистика */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: var(--light-blue);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(0, 123, 255, 0.1);
+        }
+
+        .stat-value { font-weight: 700; color: var(--accent-blue); font-size: 18px; display: block; }
+        .stat-label { font-size: 12px; color: var(--text-secondary); }
+
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <img src="C:\Users\ADMIN\Downloads\donatov.png" alt="DonatovGifts Logo">
+        <h1>DonatovGifts — это надёжный проводник сделок в сфере NFT</h1>
+    </header>
+
+    <div class="main-content">
+        <section id="home" class="page-section active">
+            <h2><i class="fas fa-shield-halved"></i> О платформе</h2>
+            <div class="card-box">
+                DonatovGifts предоставляет защищенную среду для проведения OTC-сделок. Мы автоматизировали процесс обмена, чтобы вы могли торговать активами (NFT, Gifts, TON) без риска столкнуться с мошенничеством. 
+                <br><br>
+                Все операции защищены протоколом депонирования.
+            </div>
+        </section>
+
+        <section id="rules" class="page-section">
+            <h2><i class="fas fa-file-contract"></i> Регламент</h2>
+            <div class="card-box" style="white-space: pre-wrap; font-size: 14px;">
+1. Общие положения
+1.1. DonatovGifts — автоматизированная OTC-платформа для безопасного обмена активов.
+1.2. Использование сервиса подразумевает полное согласие с данным Регламентом.
+
+2. Регламент проведения сделок
+2.1. Сделка инициируется через генерацию ID в боте.
+2.2. Платформа выступает гарантом: средства депонируются на смарт-контракте.
+
+3. Безопасность (AML/KYC)
+3.1. Верификация: баланс кошелька продавца должен быть не менее 15% от суммы сделки для подтверждения ликвидности.
+3.2. Тайминг: передача актива — строго в течение 300 секунд.
+
+4. Нарушения
+4.1. Любое несоответствие метаданных — попытка фрода.
+4.2. Недостаток ликвидности (п. 3.1) — статус «Suspicious Activity».
+            </div>
+        </section>
+
+        <section id="about" class="page-section">
+            <h2><i class="fas fa-circle-info"></i> О нас</h2>
+            <div class="card-box">
+                <strong>DonatovGifts — Выбор профессионалов</strong>
+                <p>Почему нам доверяют топовые трейдеры?</p>
+                <div class="stat-grid">
+                    <div class="stat-item"><span class="stat-value">2,400+</span><span class="stat-label">Сделок</span></div>
+                    <div class="stat-item"><span class="stat-value">$450k+</span><span class="stat-label">Оборот</span></div>
+                    <div class="stat-item"><span class="stat-value">180с</span><span class="stat-label">Ср. время</span></div>
+                    <div class="stat-item"><span class="stat-value">100%</span><span class="stat-label">Защита</span></div>
+                </div>
+                <p style="font-size: 13px; margin-top: 15px; color: #28a745;"><i class="fas fa-check-circle"></i> Интеграция с Donatov.net подтверждена.</p>
+            </div>
+        </section>
+
+        <section id="reviews" class="page-section">
+            <h2><i class="fas fa-star"></i> Отзывы</h2>
+            <div id="reviews-list"></div>
+        </section>
+    </div>
+
+    <nav class="navbar">
+        <button class="nav-item active" onclick="nav('home', this)"><i class="fas fa-home"></i>Главная</button>
+        <button class="nav-item" onclick="nav('rules', this)"><i class="fas fa-gavel"></i>Правила</button>
+        <button class="nav-item" onclick="nav('reviews', this)"><i class="fas fa-comment-dots"></i>Отзывы</button>
+        <button class="nav-item" onclick="nav('about', this)"><i class="fas fa-users"></i>О нас</button>
+        <a href="https://t.me/Donatovgift_manager" target="_blank" class="nav-item"><i class="fas fa-headset"></i>Саппорт</a>
+    </nav>
+</div>
+
+<script>
+    function nav(id, btn) {
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    // Генератор отзывов
+    const names = ["макс", "саша", "Дмитрий", "Иван", "ева", "nerka", "Аноним", "Z", "никита", "Артем", "Анна", "kerch", "майонез"];
+    const phrases = ["Хороший сервис, +rep", "топчик", "Топ гарант", "Быстро и четко", "Лучшая OTC площадка", "Спасибо саппорту", "3 минуты и готово", "Честно работают", "Респект"];
+
+    let reviewsContent = '';
+    for(let i=0; i<50; i++) {
+        let name = i === 0 ? "Максим" : names[Math.floor(Math.random()*names.length)];
+        let text = i === 0 ? "Хороший сервис, менеджеру +rep" : phrases[Math.floor(Math.random()*phrases.length)];
+        let isFive = Math.random() > 0.15;
+        let day = Math.floor(Math.random()*8) + 12;
+        
+        reviewsContent += `
+            <div class="review-card">
+                <div class="review-top">
+                    <div class="user-info"><i class="fas fa-user-circle"></i> ${name}</div>
+                    <div class="stars">${isFive ? '⭐⭐⭐⭐⭐' : '⭐⭐⭐⭐'}</div>
+                </div>
+                <div class="review-text">${text}</div>
+                <div class="review-meta">
+                    <span>${day} марта, 2026</span>
+                    <span>ID: ${Math.floor(Math.random()*900000 + 100000)}</span>
+                </div>
+            </div>
+        `;
+    }
+    document.getElementById('reviews-list').innerHTML = reviewsContent;
+</script>
+
+</body>
+</html>
