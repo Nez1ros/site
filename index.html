@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>DonatovGifts | Liquid Glass — безопасные OTC-сделки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -13,20 +13,8 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --glass-bg: rgba(255, 255, 255, 0.22);
-            --glass-border: rgba(255, 255, 255, 0.45);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            --azure-liquid: #3b82f6;
-            --glow-blue: rgba(59,130,246,0.5);
-            --deep-lake: #0f2b3d;
-            --text-light: #f0f9ff;
-            --text-soft: #e2f0ff;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at 20% 30%, #0b2b44, #021a2c);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -34,50 +22,144 @@
             padding: 20px 12px 100px 12px;
             position: relative;
             overflow-x: hidden;
+            background: #030d1a;
         }
 
-        body::before {
-            content: "";
+        /* динамический градиентный фон */
+        .animated-bg {
             position: fixed;
-            top: -30%;
-            left: -20%;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(ellipse at 30% 40%, rgba(0,180,255,0.2), transparent 70%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, #0a1a2f, #030d1a);
+            z-index: -2;
+            animation: bgPulse 15s infinite alternate;
+        }
+        @keyframes bgPulse {
+            0% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        .moving-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 180, 255, 0.25), rgba(0, 100, 200, 0.05), transparent 70%);
+            animation: moveGradient 30s infinite alternate ease-in-out;
+            z-index: -1;
             pointer-events: none;
-            z-index: 0;
         }
 
-        body::after {
-            content: "";
+        @keyframes moveGradient {
+            0% { transform: translate(0%, 0%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-15%, -10%) scale(1.2); opacity: 0.8; }
+            100% { transform: translate(10%, 15%) scale(1.4); opacity: 0.5; }
+        }
+
+        /* жидкостные фоновые сферы */
+        .liquid-bg {
             position: fixed;
-            bottom: -20%;
-            right: -10%;
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(ellipse at 70% 80%, rgba(0,212,255,0.25), transparent 70%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
             pointer-events: none;
-            z-index: 0;
         }
 
-        .liquid-blob {
-            position: fixed;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(59,130,246,0.2), rgba(0,100,200,0.05));
+        .blur-sphere {
+            position: absolute;
+            border-radius: 50%;
             filter: blur(90px);
-            border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
-            animation: morph 18s infinite alternate ease-in-out;
-            z-index: 0;
-            pointer-events: none;
+            will-change: transform;
         }
 
-        .blob1 { top: -15%; left: -10%; width: 70vw; height: 70vw; animation-duration: 22s; }
-        .blob2 { bottom: -20%; right: -5%; width: 60vw; height: 60vw; animation-duration: 25s; animation-direction: alternate-reverse; }
-        
-        @keyframes morph {
-            0% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; transform: translate(0,0) rotate(0deg);}
-            100% { border-radius: 40% 60% 30% 70% / 60% 40% 50% 40%; transform: translate(3%, 2%) rotate(5deg);}
+        .sphere1 {
+            width: 70vw;
+            height: 70vw;
+            top: -20%;
+            left: -20%;
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.5), rgba(0, 100, 200, 0.15));
+            animation: floatSphere1 22s infinite alternate ease-in-out, rotateSphere 40s infinite linear;
+        }
+
+        .sphere2 {
+            width: 80vw;
+            height: 80vw;
+            bottom: -30%;
+            right: -20%;
+            background: radial-gradient(circle, rgba(0, 220, 255, 0.4), rgba(0, 80, 160, 0.12));
+            animation: floatSphere2 28s infinite alternate-reverse ease-in-out, rotateSphere 50s infinite reverse linear;
+        }
+
+        .sphere3 {
+            width: 60vw;
+            height: 60vw;
+            top: 40%;
+            left: 60%;
+            background: radial-gradient(circle, rgba(100, 150, 255, 0.35), rgba(0, 100, 200, 0.08));
+            animation: floatSphere3 30s infinite alternate ease-in-out, rotateSphere 35s infinite linear;
+            animation-delay: -5s;
+        }
+
+        @keyframes floatSphere1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(8%, 5%) scale(1.15); }
+        }
+        @keyframes floatSphere2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-7%, 6%) scale(1.2); }
+        }
+        @keyframes floatSphere3 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, -4%) scale(1.1); }
+        }
+
+        @keyframes rotateSphere {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* жидкие капли на фоне */
+        .liquid-drops {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .drop {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+            filter: blur(20px);
+            animation: floatDrop 12s infinite alternate ease-in-out;
+        }
+        .drop1 { width: 180px; height: 180px; top: 10%; left: 5%; background: radial-gradient(circle, rgba(0,180,255,0.15), transparent); animation-duration: 14s; }
+        .drop2 { width: 250px; height: 250px; bottom: 5%; right: -5%; background: radial-gradient(circle, rgba(100,150,255,0.12), transparent); animation-duration: 18s; animation-delay: -3s; }
+        .drop3 { width: 140px; height: 140px; top: 60%; left: 80%; background: radial-gradient(circle, rgba(0,200,255,0.1), transparent); animation-duration: 16s; animation-delay: -6s; }
+        @keyframes floatDrop {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            100% { transform: translate(30px, -20px) rotate(8deg) scale(1.1); }
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.1;
+            background: repeating-radial-gradient(circle at 20% 30%, rgba(0,0,0,0.1), rgba(255,255,255,0.05) 2px);
+            mix-blend-mode: overlay;
         }
 
         .app-master {
@@ -88,21 +170,21 @@
         }
 
         .glass-interface {
-            background: rgba(15, 35, 55, 0.4);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-radius: 56px;
-            border: 1px solid rgba(255,255,255,0.35);
-            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.2);
+            background: rgba(20, 35, 55, 0.3);
+            backdrop-filter: blur(36px);
+            -webkit-backdrop-filter: blur(36px);
+            border-radius: 64px;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .hero-header {
             text-align: center;
             padding: 32px 20px 20px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         .logo-badge {
@@ -110,25 +192,30 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
             padding: 8px 28px;
             border-radius: 100px;
             margin-bottom: 18px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            border: 0.5px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+        .logo-badge:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .logo-badge i {
             font-size: 32px;
-            color: #90e0ff;
-            filter: drop-shadow(0 2px 6px rgba(0,180,255,0.4));
+            color: #a0e4ff;
+            filter: drop-shadow(0 2px 8px rgba(0, 180, 255, 0.6));
         }
 
         .logo-badge span {
             font-weight: 800;
             font-size: 28px;
-            background: linear-gradient(130deg, #ffffff, #b3e4ff);
+            background: linear-gradient(130deg, #ffffff, #b8eaff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -136,16 +223,21 @@
         }
 
         .hero-header h1 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
             display: inline-block;
             padding: 6px 18px;
             border-radius: 60px;
-            color: #ffffffcc;
-            border: 0.5px solid rgba(255,255,255,0.3);
+            color: #ffffffdd;
+            border: 0.5px solid rgba(255, 255, 255, 0.35);
             margin-top: 4px;
+            transition: all 0.3s;
+        }
+        .hero-header h1:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .content-scroll {
@@ -157,16 +249,16 @@
 
         .page-section {
             display: none;
-            animation: floatIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            animation: liquidReveal 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .page-section.active {
             display: block;
         }
 
-        @keyframes floatIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes liquidReveal {
+            0% { opacity: 0; transform: translateY(30px) scale(0.96); filter: blur(8px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
 
         h2 {
@@ -177,37 +269,271 @@
             align-items: center;
             gap: 12px;
             color: #fff;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            animation: slideInLeft 0.5s ease-out;
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         h2 i {
-            background: rgba(255,255,255,0.18);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(8px);
             padding: 10px;
             border-radius: 28px;
             font-size: 1.3rem;
             color: #9dd8ff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        h2 i:hover {
+            transform: scale(1.05) rotate(3deg);
+            background: rgba(255, 255, 255, 0.3);
         }
 
+        /* усиленные стеклянные карточки с анимированной границей */
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
             padding: 24px 22px;
             border: 1px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.4, 1);
             color: #f0fcff;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(100, 200, 255, 0.8), transparent);
+            animation: shimmer 8s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
         .glass-card:hover {
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 20px 32px -12px rgba(0,0,0,0.3);
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.13);
+            border-color: rgba(255, 255, 255, 0.65);
+            box-shadow: 0 28px 40px -20px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
         }
 
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* новые элементы главного экрана */
+        .stats-mini {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .stat-mini-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 12px;
+            text-align: center;
+            flex: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+            animation: fadeInScale 0.5s ease-out backwards;
+            animation-delay: calc(var(--i, 0) * 0.1s);
+        }
+        .stat-mini-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        .stat-mini-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #fff, #9acdff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .stat-mini-label {
+            font-size: 0.7rem;
+            color: #cce7ff;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .floating-icons {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .float-icon {
+            text-align: center;
+            animation: floatIcon 4s infinite alternate ease-in-out;
+            transition: all 0.3s;
+            cursor: default;
+        }
+        .float-icon i {
+            font-size: 2rem;
+            color: #6bc8ff;
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+        }
+        .float-icon span {
+            display: block;
+            font-size: 0.7rem;
+            margin-top: 6px;
+            color: #cce7ff;
+        }
+        .float-icon:hover i {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 15px rgba(59,130,246,0.4);
+        }
+        @keyframes floatIcon {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
+        }
+
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            padding: 16px;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+            animation: slideInRight 0.5s ease-out backwards;
+            animation-delay: calc(var(--i, 0) * 0.1s);
+        }
+        .step-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(8px);
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+        }
+        .step-item:hover .step-number {
+            transform: scale(1.1);
+            background: rgba(59, 130, 246, 0.7);
+        }
+        .step-content h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .step-content p {
+            font-size: 0.8rem;
+            color: #cce7ff;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(59,130,246,0.8), rgba(0,100,200,0.8));
+            backdrop-filter: blur(12px);
+            padding: 14px 28px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 0 15px rgba(59,130,246,0.3);
+            animation: pulseGlow 2s infinite, fadeInUp 0.6s ease-out;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(59,130,246,0.3); transform: scale(1); }
+            50% { box-shadow: 0 0 25px rgba(59,130,246,0.8); transform: scale(1.01); }
+            100% { box-shadow: 0 0 5px rgba(59,130,246,0.3); transform: scale(1); }
+        }
+        .cta-button:hover {
+            transform: scale(1.02);
+            background: linear-gradient(135deg, rgba(59,130,246,1), rgba(0,120,220,1));
+            box-shadow: 0 0 30px rgba(59,130,246,1);
+            animation: none;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 18px;
+        }
+        .feature-item {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            transition: all 0.3s;
+            padding: 4px 0;
+        }
+        .feature-item i {
+            width: 28px;
+            color: #6bc8ff;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        .feature-item:hover {
+            transform: translateX(5px);
+        }
+        .feature-item:hover i {
+            transform: scale(1.1);
+            color: #90e0ff;
+        }
+
+        /* остальные стили (регламент, отзывы, навигация) */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -215,15 +541,17 @@
             margin: 20px 0 16px;
         }
         .stat-bubble {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(8px);
-            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border-radius: 34px;
             padding: 16px 8px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+            animation: fadeInScale 0.5s ease-out backwards;
+            animation-delay: calc(var(--i, 0) * 0.1s);
         }
-        .stat-bubble:hover { background: rgba(255,255,255,0.2); transform: scale(1.02);}
+        .stat-bubble:hover { background: rgba(255, 255, 255, 0.22); transform: scale(1.02);}
         .stat-number {
             font-size: 2rem;
             font-weight: 800;
@@ -238,38 +566,23 @@
             color: #cce7ff;
         }
 
-        .feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-top: 18px;
-        }
-        .feature-item {
-            display: flex;
-            gap: 14px;
-            align-items: center;
-        }
-        .feature-item i {
-            width: 28px;
-            color: #6bc8ff;
-            font-size: 1.2rem;
-        }
-
         .regulations-container {
             display: flex;
             flex-direction: column;
             gap: 24px;
         }
         .reg-block {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 32px;
             padding: 18px 20px;
             border-left: 3px solid #3b82f6;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            animation: fadeInUp 0.5s ease-out backwards;
+            animation-delay: calc(var(--i, 0) * 0.1s);
         }
         .reg-block:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.13);
+            transform: translateX(6px);
         }
         .reg-title {
             display: flex;
@@ -283,6 +596,10 @@
         .reg-title i {
             font-size: 1.3rem;
             color: #6bc8ff;
+            transition: all 0.3s;
+        }
+        .reg-block:hover .reg-title i {
+            transform: rotate(5deg);
         }
         .reg-list {
             list-style: none;
@@ -313,20 +630,24 @@
         }
 
         .review-card {
-            background: rgba(20, 40, 58, 0.5);
-            backdrop-filter: blur(16px);
-            border-radius: 32px;
+            background: rgba(30, 50, 75, 0.45);
+            backdrop-filter: blur(24px);
+            border-radius: 40px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.4, 1);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+            animation-delay: calc(var(--i, 0) * 0.02s);
         }
 
         .review-card:hover {
-            transform: translateY(-5px);
-            background: rgba(30, 60, 90, 0.55);
-            border-color: rgba(255,255,255,0.6);
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.35);
+            transform: translateY(-6px);
+            background: rgba(40, 70, 100, 0.6);
+            border-color: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 24px 36px -16px rgba(0, 0, 0, 0.4);
         }
 
         .review-header {
@@ -343,7 +664,7 @@
         .avatar-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(145deg, #4aa8ff, #1e6ec5);
+            background: linear-gradient(145deg, #5aa9ff, #1e6ec5);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -351,8 +672,12 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: white;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s;
+        }
+        .review-card:hover .avatar-icon {
+            transform: scale(1.05);
         }
         .user-name {
             font-weight: 700;
@@ -361,7 +686,7 @@
         }
         .user-badge {
             font-size: 0.65rem;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.25);
             padding: 2px 8px;
             border-radius: 30px;
             color: #c4e2ff;
@@ -373,7 +698,7 @@
         }
         .review-text {
             font-size: 0.9rem;
-            color: #e6f3ff;
+            color: #eef6ff;
             margin: 12px 0 12px;
             line-height: 1.45;
             font-weight: 400;
@@ -382,12 +707,13 @@
             display: flex;
             justify-content: space-between;
             font-size: 0.7rem;
-            color: #b8d0ff;
-            border-top: 1px solid rgba(255,255,255,0.15);
+            color: #c2dbff;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 12px;
             margin-top: 6px;
         }
 
+        /* адаптивная навигация */
         .sticky-nav {
             position: fixed;
             bottom: 20px;
@@ -397,25 +723,31 @@
             justify-content: center;
             z-index: 1100;
             pointer-events: none;
+            padding: 0 12px;
         }
         .nav-bar {
-            background: rgba(15, 35, 55, 0.6);
-            backdrop-filter: blur(24px);
-            width: calc(100% - 32px);
+            background: rgba(20, 35, 55, 0.6);
+            backdrop-filter: blur(36px);
+            width: 100%;
             max-width: 540px;
-            border-radius: 60px;
+            min-width: 280px;
+            border-radius: 80px;
             display: flex;
-            justify-content: space-around;
+            flex-wrap: wrap;
+            justify-content: center;
             align-items: center;
+            gap: 4px;
             padding: 8px 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.45);
             pointer-events: auto;
+            transition: all 0.3s;
         }
         .nav-item {
-            display: flex;
+            display: inline-flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 4px;
             background: transparent;
             border: none;
@@ -424,47 +756,77 @@
             font-size: 0.7rem;
             color: #ccdef5;
             cursor: pointer;
-            transition: all 0.2s;
-            padding: 6px 14px;
-            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+            padding: 6px 12px;
+            border-radius: 60px;
+            min-width: 60px;
+            flex-shrink: 0;
+            white-space: nowrap;
         }
         .nav-item i {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
+            transition: transform 0.3s;
+        }
+        .nav-item span {
+            font-size: 0.65rem;
+            transition: all 0.2s;
         }
         .nav-item.active {
             color: white;
-            background: rgba(59,130,246,0.4);
-            backdrop-filter: blur(4px);
-            text-shadow: 0 0 6px rgba(0,160,255,0.6);
+            background: rgba(59, 130, 246, 0.6);
+            backdrop-filter: blur(12px);
+            text-shadow: 0 0 8px rgba(0, 160, 255, 0.8);
+            box-shadow: 0 0 12px rgba(59,130,246,0.3);
+        }
+        .nav-item:hover i {
+            transform: translateY(-3px) scale(1.05);
         }
         .nav-item:hover {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.2);
             color: #fff;
+        }
+
+        @media (max-width: 500px) {
+            .nav-item { padding: 5px 8px; min-width: 52px; }
+            .nav-item i { font-size: 1.2rem; }
+            .nav-item span { font-size: 0.6rem; }
+            .nav-bar { gap: 2px; padding: 6px 8px; }
+        }
+        @media (max-width: 420px) {
+            .nav-item { padding: 4px 6px; min-width: 48px; }
+            .nav-item i { font-size: 1.1rem; }
+            .nav-item span { font-size: 0.55rem; }
+        }
+        @media (max-width: 380px) {
+            .nav-item { padding: 4px 4px; min-width: 44px; }
+            .nav-item i { font-size: 1rem; }
+            .nav-item span { font-size: 0.5rem; }
         }
 
         .support-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.2);
             padding: 8px 22px;
             border-radius: 60px;
             text-decoration: none;
             color: #eef4ff;
             font-weight: 500;
-            backdrop-filter: blur(8px);
-            transition: all 0.2s;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s;
         }
         .support-link:hover {
-            background: rgba(59,130,246,0.5);
+            background: rgba(59, 130, 246, 0.7);
             transform: scale(1.02);
+            box-shadow: 0 0 16px rgba(59,130,246,0.4);
         }
 
         .content-scroll::-webkit-scrollbar {
             width: 5px;
         }
         .content-scroll::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 10px;
         }
         .content-scroll::-webkit-scrollbar-thumb {
@@ -474,8 +836,19 @@
     </style>
 </head>
 <body>
-<div class="liquid-blob blob1"></div>
-<div class="liquid-blob blob2"></div>
+<div class="animated-bg"></div>
+<div class="moving-gradient"></div>
+<div class="liquid-bg">
+    <div class="blur-sphere sphere1"></div>
+    <div class="blur-sphere sphere2"></div>
+    <div class="blur-sphere sphere3"></div>
+</div>
+<div class="liquid-drops">
+    <div class="drop drop1"></div>
+    <div class="drop drop2"></div>
+    <div class="drop drop3"></div>
+</div>
+<div class="noise-overlay"></div>
 
 <div class="app-master">
     <div class="glass-interface">
@@ -488,11 +861,53 @@
         </div>
 
         <div class="content-scroll" id="scrollableContent">
+            <!-- ГЛАВНАЯ С УЛУЧШЕННЫМИ АНИМАЦИЯМИ -->
             <section id="home" class="page-section active">
                 <h2><i class="fas fa-shield-halved"></i> Безопасность сделок</h2>
                 <div class="glass-card">
                     <p style="margin-bottom: 16px; font-weight: 500;">Автоматическое депонирование средств. Более <strong>2400+</strong> успешных сделок без потерь.</p>
                     <p style="margin-bottom: 20px;">DonatovGifts — это умный эскроу-сервис, который проверяет ликвидность и метаданные перед финальным обменом. Работаем с <strong>NFT, Gifts, TON</strong> и коллекционными активами.</p>
+                    
+                    <div class="stats-mini">
+                        <div class="stat-mini-card" style="--i: 0"><div class="stat-mini-number" id="counterDeals">0+</div><div class="stat-mini-label">Успешных сделок</div></div>
+                        <div class="stat-mini-card" style="--i: 1"><div class="stat-mini-number" id="counterVolume">$0</div><div class="stat-mini-label">Общий объём</div></div>
+                        <div class="stat-mini-card" style="--i: 2"><div class="stat-mini-number">97%</div><div class="stat-mini-label">5★ отзывов</div></div>
+                    </div>
+
+                    <div class="floating-icons">
+                        <div class="float-icon"><i class="fas fa-shield-alt"></i><span>Гарантия</span></div>
+                        <div class="float-icon"><i class="fas fa-bolt"></i><span>Мгновенно</span></div>
+                        <div class="float-icon"><i class="fas fa-hand-holding-usd"></i><span>Без комиссии</span></div>
+                    </div>
+
+                    <div class="steps-container">
+                        <div class="step-item" style="--i: 0">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Создайте сделку</h4>
+                                <p>Сгенерируйте ID в нашем боте за 10 секунд</p>
+                            </div>
+                        </div>
+                        <div class="step-item" style="--i: 1">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Заморозьте активы</h4>
+                                <p>Платформа блокирует средства на смарт-контракте</p>
+                            </div>
+                        </div>
+                        <div class="step-item" style="--i: 2">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Получите оплату</h4>
+                                <p>Автоматическое зачисление после проверки</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://t.me/Donatovgift_manager" target="_blank" class="cta-button">
+                        <i class="fab fa-telegram"></i> Начать сделку
+                    </a>
+
                     <div class="feature-list">
                         <div class="feature-item"><i class="fas fa-clock"></i><span>Автоматический таймер — 300 секунд на безопасную передачу</span></div>
                         <div class="feature-item"><i class="fas fa-chart-line"></i><span>AML‑скрининг кошельков перед сделкой</span></div>
@@ -501,11 +916,12 @@
                 </div>
             </section>
 
+            <!-- ПРАВИЛА -->
             <section id="rules" class="page-section">
                 <h2><i class="fas fa-file-contract"></i> Регламент платформы</h2>
                 <div class="glass-card">
                     <div class="regulations-container">
-                        <div class="reg-block">
+                        <div class="reg-block" style="--i: 0">
                             <div class="reg-title"><i class="fas fa-scroll"></i> 1. Общие положения</div>
                             <ul class="reg-list">
                                 <li><i class="fas fa-angle-right"></i> DonatovGifts — автоматизированная OTC-платформа с мультиподписью.</li>
@@ -513,7 +929,7 @@
                             </ul>
                         </div>
 
-                        <div class="reg-block">
+                        <div class="reg-block" style="--i: 1">
                             <div class="reg-title"><i class="fas fa-bolt"></i> 2. Процесс сделки</div>
                             <ul class="reg-list">
                                 <li><i class="fas fa-angle-right"></i> Стороны генерируют ID-сессии в нашем боте.</li>
@@ -521,7 +937,7 @@
                             </ul>
                         </div>
 
-                        <div class="reg-block">
+                        <div class="reg-block" style="--i: 2">
                             <div class="reg-title"><i class="fas fa-shield-alt"></i> 3. Безопасность (AML/KYC)</div>
                             <ul class="reg-list">
                                 <li><i class="fas fa-angle-right"></i> <strong>Верификация ликвидности:</strong> продавец обязан иметь баланс от 15% от суммы сделки для подтверждения платёжеспособности.</li>
@@ -529,7 +945,7 @@
                             </ul>
                         </div>
 
-                        <div class="reg-block">
+                        <div class="reg-block" style="--i: 3">
                             <div class="reg-title"><i class="fas fa-ban"></i> 4. Нарушения и фрод</div>
                             <ul class="reg-list">
                                 <li><i class="fas fa-angle-right"></i> Несоответствие метаданных заявленному активу влечёт блокировку кошелька нарушителя.</li>
@@ -541,15 +957,16 @@
                 </div>
             </section>
 
+            <!-- О НАС -->
             <section id="about" class="page-section">
                 <h2><i class="fas fa-rocket"></i> О проекте</h2>
                 <div class="glass-card">
                     <p><strong>Мы — команда разработчиков из экосистемы Donatov</strong>, которая создала безопасный мост для P2P-обмена цифровыми активами. Наша миссия — исключить мошенничество и ускорить сделки.</p>
                     <div class="stats-grid">
-                        <div class="stat-bubble"><div class="stat-number">2,840+</div><div class="stat-label">Успешных сделок</div></div>
-                        <div class="stat-bubble"><div class="stat-number">$612k</div><div class="stat-label">Общий объём</div></div>
-                        <div class="stat-bubble"><div class="stat-number">97%</div><div class="stat-label">5★ отзывов</div></div>
-                        <div class="stat-bubble"><div class="stat-number">128 c</div><div class="stat-label">Среднее время</div></div>
+                        <div class="stat-bubble" style="--i: 0"><div class="stat-number">2,840+</div><div class="stat-label">Успешных сделок</div></div>
+                        <div class="stat-bubble" style="--i: 1"><div class="stat-number">$612k</div><div class="stat-label">Общий объём</div></div>
+                        <div class="stat-bubble" style="--i: 2"><div class="stat-number">97%</div><div class="stat-label">5★ отзывов</div></div>
+                        <div class="stat-bubble" style="--i: 3"><div class="stat-number">128 c</div><div class="stat-label">Среднее время</div></div>
                     </div>
                     <div class="support-float" style="margin-top: 16px; text-align: center;">
                         <a href="https://t.me/Donatovgift_manager" target="_blank" class="support-link"><i class="fab fa-telegram"></i> Служба поддержки 24/7</a>
@@ -557,6 +974,7 @@
                 </div>
             </section>
 
+            <!-- ОТЗЫВЫ -->
             <section id="reviews" class="page-section">
                 <h2><i class="fas fa-comment-dots"></i> Реальные отзывы</h2>
                 <div id="dynamicReviews" class="reviews-container"></div>
@@ -577,37 +995,59 @@
 
 <script>
     (function() {
+        // Анимация счётчиков
+        function animateCounter(element, target, isCurrency = false) {
+            let current = 0;
+            const increment = target / 50;
+            const interval = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(interval);
+                }
+                if (isCurrency) {
+                    element.textContent = '$' + Math.floor(current).toLocaleString() + 'k';
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString() + '+';
+                }
+            }, 30);
+        }
+        const dealsEl = document.getElementById('counterDeals');
+        const volumeEl = document.getElementById('counterVolume');
+        if (dealsEl) animateCounter(dealsEl, 2840, false);
+        if (volumeEl) animateCounter(volumeEl, 612, true);
+
         const firstNames = [
-            "Максим", "Александр", "дима", "Иван", "Евгений", "Анна", "Екатерина", "сергей", "Андрей", "Кирилл",
-            "саня", "Миша", "Даниил", "ZOV", "Вероника", "Никита", "артем", "Полина", "Глеб", "матвей",
-            "Тимур", "ярослав", "Марк", "Лев", "Роман", "zxz", "Татьяна", "wika", "Ксения", "Дарина", "ZEN", "WhaleX"
+            "Макс", "аноним", "Дмитрий", "ванёк", "Иван", "аноним", "некит", "Сергей", "Андрей", "аноним",
+            "Владислав", "Михаил", "kopie", "alice", "Вероника", "Никита", "артем", "Полина", "глеб", "Мат",
+            "Тимур", "ярик", "Марк", "лев", "Роман", "Ольга", "аноним", "аноним", "аноним", "дара", "ZEN", "WhaleX"
         ];
-        const lastNames = ["", ""];
-        const funnyNicks = [""];
+        const lastNames = ["", "", " ", " NFT", " ", " Gifter", " ", " ", " ", ""];
+        const funnyNicks = ["", "", "", "NFT", "", "zxc", "", "", "", "", "", "Glassy"];
 
         const longReviews = [
-            "имба",
-            "Лучший OTC-гарант. Безопасно",
-            "Быстро, чётко",
-            "Очень понравилась автоматическая проверка ликвидности",
-            "Спасибо не н@еbали",
-            "Топ",
-            "Использую для крупных сделок",
-            "Эскроу работает как часы.",
+            "поддержка имба",
+            " ",
+            "Быстро, чётко, без лишних вопросов. Рекомендую друзьям!",
+            "Очень понравилась автоматическая проверка ликвидности, чувствую себя в безопасности.",
+            "Спасибо DonatovGifts! Обменял снупа на змейку с черным фоном",
+            "Топ платформа, ни разу не подвели. Поддержка на высоте!",
+            "10/10",
+            "еба, скупаёте здесь комиссии почти нет имбулечка",
+            "Ребята знают своё дело. Советую всем, кто торгует коллекционными гифтами.",
             "+rep",
-            "супер!удобный интерфейс.",
-            "Уже 5 успешных сделок и никаких проблем.",
-            "Отличная защита от фрода. После сделки чувствуешь уверенность.",
-            "Огромное спасибо за оперативную поддержку в 3 часа ночи, выручили!",
-            "лучшая OTC площадка в рф, комиссии почти нет однозначно респект разработчикам!",
-            "Всё честно.",
-            "Провёл сделку на 12k$(понты), всё прошло гладко и чётенько",
-            "Удобный бот, моментальная фиксация активов Топ!",
+            "не скам",
+            "не н@ебали, спс",
+            "сапорт 10 мин не отвечал, но вроде всё норм",
+            "Лучшая OTC площадка в РФ, однозначно респект разработчикам!",
+            "Понравился минимализм и чёткие правила. Всё честно.",
+            "Провёл сделку на 12k$, всё прошло гладко. Спасибо гаранту!",
+            "Удобный бот, моментальная фиксация активов. Топ!",
             "Верификация занимает пару минут, раньше боялся OTC, теперь только тут.",
-            "Адекватный саппорт, объяснили все нюансы",
-            "Очень круто, что есть рейтинг трейдеров. Сделка без риска.",
-            "ну норм ток поддержка час не отвечала",
-            "."
+            "Адекватный саппорт, объяснили все нюансы AML. Рекомендую!",
+            "часто покупаю нфт через него",
+            "донатовгифтс топ",
+            "бот без лагов"
         ];
 
         const shortReviews = [
@@ -675,7 +1115,7 @@
         }
 
         function getActivityBadge() {
-            const badges = ["Топ-трейдер", "Проверено", "Whale", "OG", "Эксперт", "Активный", "Liquid Member"];
+            const badges = ["", "Проверено", "", "", "Эксперт", "Активный", ""];
             return badges[Math.floor(Math.random() * badges.length)];
         }
 
@@ -698,7 +1138,7 @@
             let badge = (Math.random() > 0.7) ? getActivityBadge() : "";
 
             reviewsHTML += `
-                <div class="review-card">
+                <div class="review-card" style="--i: ${i % 20}">
                     <div class="review-header">
                         <div class="user-block">
                             <div class="avatar-icon">${avatarContent}</div>
@@ -758,6 +1198,19 @@
             });
         });
         setActiveSection('home', document.querySelector('.nav-item[data-nav="home"]'));
+
+        // параллакс для сфер
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            const spheres = document.querySelectorAll('.blur-sphere');
+            spheres.forEach((sphere, idx) => {
+                const speed = (idx + 1) * 12;
+                const moveX = (x - 0.5) * speed;
+                const moveY = (y - 0.5) * speed;
+                sphere.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
     })();
 </script>
 </body>
